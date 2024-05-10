@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
+import axios, { AxiosResponse } from "axios";
 import SearchBar from "./SearchBar/SearchBar";
 import ImageGallery from "./ImageGallery/ImageGallery";
-import axios from "axios";
-import LoadingLSpinner from "./Loader/Loader";
+import Loader from "./Loader/Loader";
 import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
-import toast from "react-hot-toast";
 import ImageModal from "./ImageModal/ImageModal";
-import Modal from "react-modal";
-import { AxiosResponse } from "axios";
-
+import toast from "react-hot-toast";
 interface Image {
   id: string;
   urls: {
@@ -17,6 +14,10 @@ interface Image {
     small: string;
   };
   description: string;
+}
+
+interface ApiResponse {
+  results: Image[];
 }
 
 const App: React.FC = () => {
@@ -38,14 +39,13 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    Modal.setAppElement("#root");
     if (!query) return;
 
     const fetchImages = async () => {
       setIsLoading(true);
 
       try {
-        const response: AxiosResponse = await axios.get(
+        const response: AxiosResponse<ApiResponse> = await axios.get(
           `https://api.unsplash.com/search/photos?query=${query}&page=${page}&per_page=12&client_id=GlsOaQzd2KBOSQCF-_6LiDT3UFMeZCJo042ItLtEPKo`
         );
         if (response.data.results.length === 0)
@@ -90,14 +90,7 @@ const App: React.FC = () => {
           closeModal={closeModal}
         />
       )}
-      {isLoading && (
-        <LoadingLSpinner
-          type="ThreeDots"
-          color="#00BFFF"
-          height={80}
-          width={80}
-        />
-      )}
+      {isLoading && <Loader />}
       {images.length > 0 && !isLoading && (
         <LoadMoreBtn onClick={handleLoadMoreClick} />
       )}
