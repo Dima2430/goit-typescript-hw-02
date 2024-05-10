@@ -8,6 +8,7 @@ import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
 import toast from "react-hot-toast";
 import ImageModal from "./ImageModal/ImageModal";
 import Modal from "react-modal";
+import { AxiosResponse } from "axios";
 
 interface Image {
   id: string;
@@ -44,7 +45,7 @@ const App: React.FC = () => {
       setIsLoading(true);
 
       try {
-        const response = await axios.get(
+        const response: AxiosResponse = await axios.get(
           `https://api.unsplash.com/search/photos?query=${query}&page=${page}&per_page=12&client_id=GlsOaQzd2KBOSQCF-_6LiDT3UFMeZCJo042ItLtEPKo`
         );
         if (response.data.results.length === 0)
