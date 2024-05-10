@@ -1,6 +1,7 @@
+import React from "react";
 import { Audio } from "react-loader-spinner";
 
-const LoadingSpinner = () => (
+const LoadingSpinner: React.FC = () => (
   <div>
     <Audio
       type="ThreeDots"

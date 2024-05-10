@@ -1,5 +1,27 @@
+import React from "react";
 import ImageCard from "../ImageCard/ImageCard";
-const ImageGallery = ({ images, modalIsOpen, openModal, closeModal }) => {
+
+interface Image {
+  id: string;
+  urls: {
+    full: string;
+  };
+  description: string;
+}
+
+interface ImageGalleryProps {
+  images: Image[];
+  modalIsOpen: boolean;
+  openModal: (image: Image) => void;
+  closeModal: () => void;
+}
+
+const ImageGallery: React.FC<ImageGalleryProps> = ({
+  images,
+  modalIsOpen,
+  openModal,
+  closeModal,
+}) => {
   return (
     <ul
       style={{
@@ -23,4 +45,5 @@ const ImageGallery = ({ images, modalIsOpen, openModal, closeModal }) => {
     </ul>
   );
 };
+
 export default ImageGallery;

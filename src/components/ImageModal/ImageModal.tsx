@@ -1,5 +1,24 @@
+import React from "react";
 import Modal from "react-modal";
-const ImageModal = ({ modalIsOpen, closeModal, image }) => {
+
+interface Image {
+  urls: {
+    full: string;
+  };
+  description: string;
+}
+
+interface ImageModalProps {
+  modalIsOpen: boolean;
+  closeModal: () => void;
+  image: Image;
+}
+
+const ImageModal: React.FC<ImageModalProps> = ({
+  modalIsOpen,
+  closeModal,
+  image,
+}) => {
   return (
     <Modal
       isOpen={modalIsOpen}
@@ -38,4 +57,5 @@ const ImageModal = ({ modalIsOpen, closeModal, image }) => {
     </Modal>
   );
 };
+
 export default ImageModal;

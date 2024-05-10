@@ -1,9 +1,14 @@
+import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { useState } from "react";
-export default function SearchBar({ onSubmit }) {
+
+interface SearchBarProps {
+  onSubmit: (query: string) => void;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
   const [query, setQuery] = useState("");
 
-  function onFormSubmit(e) {
+  function onFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (query.trim() === "") {
       toast("Please,enter text to search for images");
@@ -35,4 +40,6 @@ export default function SearchBar({ onSubmit }) {
       </form>
     </header>
   );
-}
+};
+
+export default SearchBar;

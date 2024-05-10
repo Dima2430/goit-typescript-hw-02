@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import SearchBar from "./SearchBar/SearchBar";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import axios from "axios";
@@ -8,16 +8,26 @@ import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
 import toast from "react-hot-toast";
 import ImageModal from "./ImageModal/ImageModal";
 import Modal from "react-modal";
-const App = () => {
-  const [images, setImages] = useState([]);
+
+interface Image {
+  id: string;
+  urls: {
+    full: string;
+    small: string;
+  };
+  description: string;
+}
+
+const App: React.FC = () => {
+  const [images, setImages] = useState<Image[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
 
-  const openModal = (image) => {
+  const openModal = (image: Image) => {
     setSelectedImage(image);
     setModalIsOpen(true);
   };
@@ -50,7 +60,7 @@ const App = () => {
     fetchImages();
   }, [query, page]);
 
-  const handleSearchSubmit = (newQuery) => {
+  const handleSearchSubmit = (newQuery: string) => {
     setImages([]);
     setQuery(newQuery);
     setPage(1);
